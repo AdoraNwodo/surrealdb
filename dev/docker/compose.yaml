@@ -60,10 +60,23 @@ services:
       - "9090"  # for prometheus
     volumes: ["./otel-collector.yaml:/etc/otel-collector.yaml"]
 
+  clickhouse:
+    image: "clickhouse/clickhouse-server:latest"
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/lib/clickhouse/
+      - /var/log/clickhouse-server/
+      - /etc/clickhouse-server/config.d/*.xml
+      - /etc/clickhouse-server/users.d/*.xml
+      - /docker-entrypoint-initdb.d/
+
 volumes:
   grafana:
     external: false
   prometheus:
     external: false
   tempo:
+    external: false
+  clickhouse:
     external: false
